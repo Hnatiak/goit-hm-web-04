@@ -1,8 +1,8 @@
 # Use an official Python runtime as a base image
 FROM python:3.11-slim
 
-# Set the working directory to /app
-ENV APP_HOME /app
+# Set the working directory to /storage
+ENV APP_HOME /storage
 
 WORKDIR $APP_HOME
 

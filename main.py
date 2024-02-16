@@ -65,8 +65,9 @@ def save_data_from_form(data):
     parse_data = urllib.parse.unquote_plus(data.decode())
     try: 
         parse_dict = {datetime.now().isoformat(): {key: value for key, value in [el.split('=') for el in parse_data.split('&')]}}
-        with open('storage/data.json', 'a', encoding='utf-8') as file:
+        with open('data/data.json', 'a', encoding='utf-8') as file:
             json.dump(parse_dict, file, ensure_ascii=False, indent=4)
+            file.write('\n')
     except ValueError as err:
         logging.error(err)
     except OSError as err:
