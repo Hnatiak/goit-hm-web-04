@@ -61,12 +61,27 @@ class GoitFramework(BaseHTTPRequestHandler):
         with open(filename, 'rb') as file:
             self.wfile.write(file.read())
 
+# def save_data_from_form(data):
+#     parse_data = urllib.parse.unquote_plus(data.decode())
+#     print(parse_data)
+#     try:
+#         parse_dict = {datetime.now().isoformat(): {key: value for key, value in [el.split('=') for el in parse_data.split('&')]}}
+#         with open('storage/data.json', 'a', encoding='utf-8') as file:  # Відкриваємо файл у режимі дозапису ('a')
+#             json.dump(parse_dict, file, ensure_ascii=False, indent=4)
+#             file.write('\n')
+#     except ValueError as err:
+#         logging.error(err)
+#     except OSError as err:
+#         logging.error(err)
+
 def save_data_from_form(data):
     parse_data = urllib.parse.unquote_plus(data.decode())
-    try: 
-        parse_dict = {datetime.now().isoformat(): {key: value for key, value in [el.split('=') for el in parse_data.split('&')]}}
-        with open('storage/data.json', 'w', encoding='utf-8') as file:
-            json.dump(parse_dict, file, ensure_ascii=False, indent=4)
+    print(parse_data)
+    try:
+        entry_data = {datetime.now().isoformat(): dict(urllib.parse.parse_qsl(parse_data))}
+        with open('storage/data.json', 'a', encoding='utf-8') as file:
+            json.dump(entry_data, file, ensure_ascii=False, indent=4)
+            file.write('\n')
     except ValueError as err:
         logging.error(err)
     except OSError as err:
